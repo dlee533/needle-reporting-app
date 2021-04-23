@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Form</title>
+    <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-storage.js"></script>
+
+    <!-- Font Awesome Icons -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic'
+        rel='stylesheet' type='text/css'>
+
+    <!-- Plugin CSS -->
+    <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+
+    <!-- Theme CSS - Includes Bootstrap -->
+    <link href="css/creative.min.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+    <script
+        src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyDJw5r0nJ247nyzk2XFdf3EYpuHXnSs2Ho"></script>
+
+    <script src="js/form.js"></script>
+    <style>
+    @media screen and (min-width: 600px){
+            .right{
+                text-align: left;
+            }
+            .left{
+                text-align: right;
+            }
+    }
+
+    </style>
+
+</head>
+
+<body id="page-top" style= "background: url('img/blue-green.jpg'); background-repeat: none; background-size: cover;">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="index.html"><img src = "img/logo.png" style = "width: 75px";></a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto my-2 my-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="list.html">View Reports</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#about">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <section class="page-section text-warning">
+        <div class="container text-center">
+            <h2 class="mb-4">Needle information</h2>
+            <div id="form" style="width: auto;">
+                <form>
+
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                            <!-- this is the instructions row -->
+                            <label for="location">Location*</label for="note">
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-row right" id="locationField">
+                            <input type="text" class="form-control " id="location"
+                                placeholder="Type address..." />
+                            <input type="hidden" id="loc_lat" />
+                            <input type="hidden" id="loc_long" />
+                        </div>
+                    </div>
+                    <div class="latlong-view" style="display: none;">
+                        <p><b>Latitude:</b> <span id="latitude_view"></span></p>
+                        <p><b>Longitude:</b> <span id="longitude_view"></span></p>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                            <!-- this is the instructions row -->
+                            <label for="contact">Email address (Optional)</label>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 autocomplete right">
+                            <textarea id="contact" name="instructions"
+                                placeholder="example@email.ca"></textarea>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                            <!-- this is the instructions row -->
+                            <label for="note">Message*</label>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 autocomplete right"> 
+                            <textarea id="note" name="instructions"
+                                placeholder="Type details here..." rows="4"></textarea>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                            <!-- this is the instructions row -->
+                            <label for="pic">Upload your picture*</label>
+                        </div>
+                        <div class="col-lg-6 co l-md-6 col-sm-6 col-xs-12 autocomplete">
+                            <input type="file" id="needlePic">
+                            <img id="needleImg" />
+                        </div>
+                        <div class="col-lg-6 co l-md-6 col-sm-6 col-xs-12 autocomplete">
+                        </div>
+                        <!-- this is the button for sumbit but it is invisible and handled by the button in the bottom div -->
+                    </div>
+                    <input id="submitButton" class="btn btn-warning" type="submit"
+                        style="margin-top: 10px;text-align: center;" value="Submit">
+
+                </form>
+            </div>
+        </div>
+    </section>
+ <!-- Contact Section -->
+ <section class="page-section" id="contact" style = "background-color: black; color:white;">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+          <h2 class="mt-0">Contact information</h2>
+          <hr class="divider my-4">
+          <p class="text-muted mb-5"></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 ml-auto text-center mb-5 mb-lg-0">
+          <i class="fas fa-phone fa-3x mb-3 text-muted"></i>
+          <div style = "color:#f4623a;">+1 (202) 555-0149</div>
+        </div>
+        <div class="col-lg-4 mr-auto text-center">
+          <i class="fas fa-envelope fa-3x mb-3 text-muted"></i>
+          <!-- Make sure to change the email address in anchor text AND the link below! -->
+          <a class="d-block" href="http://www.vch.ca/about-us/contact-us">Costal health contact</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-light py-5">
+    <div class="container">
+      <div class="small text-center text-muted">Copyright &copy; 2019 - Safety Ready</div>
+    </div>
+  </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="js/creative.min.js"></script>
+
+
+    <script src="js/firebase.js"></script>
+    <script src="js/utilities.js"></script>
+    <script src="js/storage.js"></script>
+
+</body>
+
+</html>
